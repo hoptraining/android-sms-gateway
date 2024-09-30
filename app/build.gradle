@@ -9,7 +9,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "me.capcom.smsgateway"
+        applicationId "com.proo.ro.sms"
         minSdk 21
         targetSdk 33
         versionCode 1

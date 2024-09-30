@@ -93,6 +93,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.buttonStart.setOnClickListener {
+            binding.switchUseRemoteServer.isChecked=binding.buttonStart.isChecked;
+            binding.switchAutostart.isChecked=binding.buttonStart.isChecked;
+            gatewaySettings.enabled = binding.buttonStart.isChecked
+            binding.layoutRemoteServer.isVisible = binding.buttonStart.isChecked
+            settingsHelper.autostart = binding.buttonStart.isChecked
             actionStart(binding.buttonStart.isChecked)
         }
 

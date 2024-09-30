@@ -149,7 +149,7 @@ To use the application, you need to grant the following permissions:
 
 _For integration examples, please refer to the [API Documentation](https://sms-gate.app/integration/api/)_
 
-The Android SMS Gateway can work in two modes: with a local server started on the device or with a cloud server at [api.sms-gate.app](https://api.sms-gate.app). The basic API is the same for both modes and is documented on the [Android SMS Gateway API Documentation](https://capcom6.github.io/android-sms-gateway/).
+The Android SMS Gateway can work in two modes: with a local server started on the device or with a cloud server at [sms.proo.ro](https://sms.proo.ro). The basic API is the same for both modes and is documented on the [Android SMS Gateway API Documentation](https://capcom6.github.io/android-sms-gateway/).
 
 ### Local server
 
@@ -196,7 +196,7 @@ Use the cloud server mode when dealing with dynamic or shared device IP addresse
     curl -X POST -u <username>:<password> \
       -H "Content-Type: application/json" \
       -d '{ "message": "Hello, world!", "phoneNumbers": ["+79990001234", "+79995556677"] }' \
-      https://api.sms-gate.app/3rdparty/v1/message
+      https://sms.proo.ro/3rdparty/v1/message
     ```
 
 For further privacy, you can deploy your own private server. See the [Private Server](https://sms-gate.app/getting-started/private-server/) section for more details.
@@ -238,7 +238,7 @@ Follow these steps to set up webhooks:
       http://<device_local_ip>:8080/webhooks/unique-id
     ```
 
-For cloud mode the process is similar, simply change the URL to https://api.sms-gate.app/3rdparty/v1/webhooks. Webhooks in Local and Cloud mode are independent.
+For cloud mode the process is similar, simply change the URL to https://sms.proo.ro/3rdparty/v1/webhooks. Webhooks in Local and Cloud mode are independent.
 
 *Note*: Webhooks are transmitted directly from the device; therefore, the device must have an outgoing internet connection. As the requests originate from the device, incoming messages remain inaccessible to us.
 
