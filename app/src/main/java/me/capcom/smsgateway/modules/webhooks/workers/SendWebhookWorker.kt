@@ -2,9 +2,11 @@ package me.capcom.smsgateway.modules.webhooks.workers
 
 import android.content.Context
 import androidx.work.BackoffPolicy
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.ListenableWorker
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
@@ -31,6 +33,7 @@ import me.capcom.smsgateway.modules.logs.LogsService
 import me.capcom.smsgateway.modules.logs.db.LogEntry
 import me.capcom.smsgateway.modules.notifications.NotificationsService
 import me.capcom.smsgateway.modules.webhooks.NAME
+import me.capcom.smsgateway.modules.webhooks.WebhooksSettings
 import me.capcom.smsgateway.modules.webhooks.domain.WebHookEventDTO
 import org.json.JSONException
 import org.koin.core.component.KoinComponent
@@ -42,6 +45,8 @@ class SendWebhookWorker(appContext: Context, params: WorkerParameters) :
 
     private val notificationsSvc: NotificationsService by inject()
     private val logsSvc: LogsService by inject()
+
+    private val settings: WebhooksSettings by inject()
 
     override suspend fun doWork(): ListenableWorker.Result {
         return when (val result = sendData()) {
@@ -89,7 +94,7 @@ class SendWebhookWorker(appContext: Context, params: WorkerParameters) :
 
     private suspend fun sendData(): Result {
         try {
-            if (runAttemptCount > MAX_RETRIES) {
+            if (runAttemptCount >= settings.retryCount) {
                 return Result.Failure("Retry limit exceeded")
             }
 
@@ -168,7 +173,8 @@ class SendWebhookWorker(appContext: Context, params: WorkerParameters) :
         fun start(
             context: Context,
             url: String,
-            data: WebHookEventDTO
+            data: WebHookEventDTO,
+            internetRequired: Boolean
         ) {
             val work = OneTimeWorkRequestBuilder<SendWebhookWorker>()
                 .setInputData(
@@ -183,11 +189,15 @@ class SendWebhookWorker(appContext: Context, params: WorkerParameters) :
                     WorkRequest.MIN_BACKOFF_MILLIS,
                     TimeUnit.MILLISECONDS
                 )
-                .setConstraints(
-                    androidx.work.Constraints.Builder()
-                        .setRequiredNetworkType(androidx.work.NetworkType.CONNECTED)
-                        .build()
-                )
+                .apply {
+                    if (internetRequired) {
+                        setConstraints(
+                            Constraints.Builder()
+                                .setRequiredNetworkType(NetworkType.CONNECTED)
+                                .build()
+                        )
+                    }
+                }
                 .build()
 
             WorkManager.getInstance(context)
@@ -195,8 +205,6 @@ class SendWebhookWorker(appContext: Context, params: WorkerParameters) :
         }
 
         private val gson = GsonBuilder().configure().create()
-
-        private const val MAX_RETRIES = 14
 
         private const val INPUT_URL = "url"
         private const val INPUT_DATA = "data"
