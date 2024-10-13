@@ -41,6 +41,16 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    productFlavors {
+        proo {
+            buildConfigField "String", "PUBLIC_URL", "\"https://sms.proo.ro/api/mobile/v1\""
+            buildConfigField "String", "APP_NAME", "\"proo.ro\""
+        }
+        cosmoslevel {
+            buildConfigField "String", "PUBLIC_URL", "\"https://sms.cosmoslevel.com/api/mobile/v1\""
+            buildConfigField "String", "APP_NAME", "\"cosmoslevel.com\""
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -53,6 +63,7 @@ android {
         exclude 'META-INF/io.netty.versions.properties'
     }
     namespace 'me.capcom.smsgateway'
+    flavorDimensions 'build'
 }
 
 dependencies {

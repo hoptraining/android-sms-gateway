@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -26,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import me.capcom.smsgateway.BuildConfig
 import me.capcom.smsgateway.R
 import me.capcom.smsgateway.databinding.FragmentSettingsBinding
 import me.capcom.smsgateway.helpers.SettingsHelper
@@ -65,6 +67,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val cloudServerText = getString(R.string.cloud_server, BuildConfig.APP_NAME)
+        view.findViewById<TextView>(R.id.textRemoteServer).text = cloudServerText
 
         binding.textAuthentication.movementMethod = LinkMovementMethod.getInstance()
         binding.textAuthentication.text = makeCopyableLink(

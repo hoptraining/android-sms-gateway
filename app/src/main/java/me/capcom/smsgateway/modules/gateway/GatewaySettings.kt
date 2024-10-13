@@ -1,5 +1,6 @@
 package me.capcom.smsgateway.modules.gateway
 
+import me.capcom.smsgateway.BuildConfig
 import me.capcom.smsgateway.modules.settings.KeyValueStorage
 import me.capcom.smsgateway.modules.settings.get
 
@@ -29,6 +30,6 @@ class GatewaySettings(
         private const val CLOUD_URL = "cloud_url"
         private const val PRIVATE_TOKEN = "private_token"
 
-        const val PUBLIC_URL = "https://sms.proo.ro/api/mobile/v1"
+        const val PUBLIC_URL =  BuildConfig.PUBLIC_URL
     }
 }
