@@ -93,7 +93,7 @@
                     tools:text="Basic auth: sms:token" />
 
                 <TextView
-                    android:id="@+id/settings_go_to_integration"
+                    android:id="@+id/settingsGoToIntegration"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

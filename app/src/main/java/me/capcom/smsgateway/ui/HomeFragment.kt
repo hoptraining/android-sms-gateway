@@ -70,7 +70,9 @@ class HomeFragment : Fragment() {
 
         val cloudServerText = getString(R.string.cloud_server, BuildConfig.APP_NAME)
         view.findViewById<TextView>(R.id.textRemoteServer).text = cloudServerText
-
+        view.findViewById<TextView>(R.id.switchUseRemoteServer).text = cloudServerText
+        val settingsGoToIntegration = getString(R.string.settings_go_to_integration, BuildConfig.APP_NAME)
+        view.findViewById<TextView>(R.id.settingsGoToIntegration).text = settingsGoToIntegration
         binding.textAuthentication.movementMethod = LinkMovementMethod.getInstance()
         binding.textAuthentication.text = makeCopyableLink(
             Html

@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Proo SMS</string>
-    <string name="notification_title">Proo SMS</string>
+    <string name="notification_title">Sms Gateway</string>
     <string name="notification_message">Waiting for messages…</string>
     <string name="tab_text_settings">SETTINGS</string>
     <string name="tab_text_messages">MESSAGES</string>
     <string name="settings_local_server">Local server</string>
-    <string name="cloud_server">proo.ro sms gateway</string>
+    <string name="cloud_server">%1$s Sms Gateway</string>
     <string name="settings_address_is_sms_capcom_me">Address is sms.proo.ro</string>
     <string name="settings_start_on_boot">Start on boot</string>
     <string name="settings_offline">Click to Connect</string>
@@ -13,7 +13,7 @@
     <string name="settings_local_address_is">Local address is %1$s:%2$d</string>
     <string name="settings_public_address_is">Public address is %1$s:%2$d</string>
     <string name="settings_basic_auth">Click to copy authorization &lt;a href&gt;%1$s:%2$s&lt;/a&gt;</string>
-    <string name="settings_go_to_integration">Go to www.proo.ro/account/integrations to enable sms integration</string>
+    <string name="settings_go_to_integration">Go to %1$s/account/integrations to enable sms integration</string>
     <string name="copied_to_clipboard">Copied</string>
     <string name="sms_gateway">SMS Gateway</string>
     <string name="local_sms_gateway_notifications">Local SMS Gateway notifications</string>
