@@ -1,6 +1,7 @@
 package me.capcom.smsgateway.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -20,6 +21,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpanned
 import androidx.core.view.isVisible
@@ -40,6 +42,10 @@ import me.capcom.smsgateway.modules.localserver.LocalServerSettings
 import me.capcom.smsgateway.modules.localserver.events.IPReceivedEvent
 import me.capcom.smsgateway.modules.orchestrator.OrchestratorService
 import org.koin.android.ext.android.inject
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import android.os.PowerManager
 
 class HomeFragment : Fragment() {
 
@@ -65,8 +71,13 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requestPermissionsAndStart()
+        // Request Ignore Battery Optimizations
+        requestIgnoreBatteryOptimizations()
 
         val cloudServerText = getString(R.string.cloud_server, BuildConfig.APP_NAME)
         view.findViewById<TextView>(R.id.textRemoteServer).text = cloudServerText
@@ -151,6 +162,19 @@ class HomeFragment : Fragment() {
 
         stateLiveData.observe(viewLifecycleOwner) {
             binding.buttonStart.isChecked = it
+        }
+    }
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun requestIgnoreBatteryOptimizations() {
+        val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (!powerManager.isIgnoringBatteryOptimizations(requireContext().packageName)) {
+            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+            intent.data = Uri.parse("package:${requireContext().packageName}")
+            startActivity(intent)
         }
     }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Proo SMS</string>
+    <string name="app_name">SMS CosmosLevel</string>
     <string name="notification_title">Sms Gateway</string>
     <string name="notification_message">Waiting for messages…</string>
     <string name="tab_text_settings">SETTINGS</string>
